@@ -20,6 +20,9 @@
   <div class="site_buttons">
     <div class="site_button <?=(isset($_REQUEST['details']) ? 'site_button_active' : '')?>" data-value="details">Details</div>
   </div>
+  <div class="site_buttons">
+    <div class="site_button" data-value="add_recipe">Add a Recipe</div>
+  </div>
 
   <a href="<?=G_URL?>"><div class="logo"></div></a>
   <div class="header_title">Recipe Administration</div>

@@ -3,19 +3,33 @@ var admin = {
 
   init: function() {
 
+    // firefox not obeying 'selected'
     if (document.forms[0]) {
       document.forms[0].reset(); 
     }
 
-    // global listing hover 
+    // global listing handler, show _hover and display the hidden delete button
     $('.listing tr').hover(function() {
+
       if ($(this).children().is('TD')) {
-        $(this).toggleClass('listing_hover');
+        $(this).addClass('listing_hover');
+        $(this).find('.delete_button').transition({opacity: 1}, 0);
       }
+
+    }, function() {
+      $(this).removeClass('listing_hover');
+      $(this).find('.delete_button').transition({opacity: 0}, 0);
     });
 
 
-     
+    $('.delete_button').click(function(e) {
+      e.stopPropagation();
+      $(this).closest('TR').toggleClass('listing_active');
+
+      $('.listing_active').length > 0 ?  $('.button_delete_selected').removeClass('button_disabled') : 1;
+      $('.listing_active').length == 0 ?  $('.button_delete_selected').addClass('button_disabled') : 1;
+
+    });
 
     $('.site_buttons div').hover(function() { $(this).toggleClass('site_button_hover'); });
     $('.site_buttons div').click(function() { 
@@ -70,6 +84,10 @@ var admin = {
           modify.add('detail');
           break;
 
+        case 'delete_selected' :
+          admin.delete_selected();
+          break;
+
         case 'back' :
           location.href = g.G_URL;
           break;
@@ -80,6 +98,21 @@ var admin = {
       }
 
     });
+
+  },
+
+  delete_selected: function() {
+
+    var datas = [];
+    $('.listing_active').each(function(key, value) {
+      datas.push({
+        type: $(this).find('.delete_button').data('type'),
+        value: $(this).find('.delete_button').data('value')
+      });
+    });
+
+    console.log(datas);
+
 
   },
 
@@ -132,16 +165,16 @@ var listing = {
 
   init: function() {
 
-    $('.listing tr').hover(function() {
-      if ($(this).children().is('TD')) {
-        $(this).toggleClass('listing_hover');
-      }
-    });
-
     $('.listing tr').click(function() {
+
+      if ($('.listing_active').length > 0) {
+        $('TR').removeClass('listing_active');
+        return true;
+      }
+
       if ($(this).children().is('TD') && $(this).data('recipe') != undefined) {
-        $('.listing tr').removeClass('listing_active');
-        $(this).addClass('listing_active');
+        $('.listing tr').removeClass('listing_selected');
+        $(this).addClass('listing_selected');
         $(this).transition({scale: 1.2});
         location.href = g.G_URL + '?recipe=' + $(this).data('recipe');
       }

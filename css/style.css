@@ -101,6 +101,9 @@ body {
 .listing_active {
   background-color: #faabab;
 }
+.listing_selected {
+  background-color: #5b9ecc;
+}
 
 .pages {
   border: 0;
@@ -213,12 +216,21 @@ body {
   -moz-border-radius: 2px;
 }
 
+.button_left {
+  float: left;
+}
+
 .button_big {
   padding: 10px 20px;
 }
 
 .button_hover { background-color: #82a96a; }
 .button_active { background-color: #5b9ecc; }
+.button_disabled { background-color: #c0c0c0; }
+
+.listing_buttons {
+  margin: 0 10px;
+}
 
 .sublisting th {
   background-color: #f5f5f5;
@@ -259,3 +271,22 @@ body {
 .newrow {
   background-color: #faf7ab;
 }
+
+.sprite {
+  width: 14px;
+  height: 14px;
+}
+
+.sprite_delete {
+  background: url('/img/sprite.png') 0 0;
+  width: 14px;
+  height: 14px;
+}
+
+.delete_button {
+  opacity: 0;
+  float: right;
+  padding: 2px 10px;
+  cursor: pointer;
+}
+

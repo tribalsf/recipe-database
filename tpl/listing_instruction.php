@@ -8,7 +8,14 @@
       <?foreach ($instructions as $instruction): ?>
       <tr <?=(isset($newone) && $newone == $instruction->title ? 'class="newrow"' : '')?>>
         <td><?=$instruction->step?></td>
-        <td><?=$instruction->title?></td>
+        <td>
+          <div 
+            class="delete_button" 
+            data-type="instruction" 
+            data-value='<?=json_encode(array('recipe_id' => $instruction->recipe_id, 'title' => $instruction->title))?>' >
+            <div class="sprite sprite_delete"></div></div>
+          <?=$instruction->title?>
+        </td>
       </tr>
       <?endforeach?>
 
