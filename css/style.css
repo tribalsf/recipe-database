@@ -268,6 +268,30 @@ body {
 
 }
 
+.status {
+  position: absolute;
+  top: 60px;
+  left: 800px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+  color: #666;
+  padding: 20px 50px;
+  border: 1px solid #999;
+
+  box-shadow: 0px 0px 5px #999;
+  -moz-box-shadow: 0px 0px 5px #999;
+  -webkit-box-shadow: 0px 0px 5px #999;
+
+  opacity: 0;
+  -moz-opacity: 0;
+  -webkit-opacity: 0;
+  filter: alpha(opacity=0);
+}
+
+.status_check { background-color: #e5fbda; }
+.status_error { background-color: #fbdada; }
+
 .newrow {
   background-color: #faf7ab;
 }
@@ -278,9 +302,26 @@ body {
 }
 
 .sprite_delete {
-  background: url('/img/sprite.png') 0 0;
+  background: url('/img/sprite.png') -1px -1px;
   width: 14px;
   height: 14px;
+}
+
+.sprite_error {
+  background: url('/img/sprite.png') -16px -1px;
+  width: 16px;
+  height: 14px;
+}
+
+.sprite_check {
+  background: url('/img/sprite.png') -33px -1px;
+  width: 16px;
+  height: 14px;
+}
+
+.status_icon {
+  float: left;
+  margin: 0 10px 0 0;
 }
 
 .delete_button {

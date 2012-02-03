@@ -111,22 +111,80 @@ var admin = {
       });
     });
 
-    console.log(datas);
+    if (datas.length == 0) {
+      admin.status('You must select items to delete first', {type: 'error'});
+      return true;
+    }
+    admin.notify('Deleting selected..');
+    $.get('ajx/delete.php', {datas: JSON.stringify(datas)}, function(response) {
+
+      console.log(response);
+
+
+    }, 'json');
 
 
   },
 
-  notify: function(message) {
+  notify: function(message, params) {
+
+    var p = {fadeOut: 3000, close: false};
+
+    if (params) {
+      for (var param in params) {
+        p[param] = params[param];
+      }
+    }
 
     var n = $('.notify');
+
+    if (p.close) { 
+      n.transition({top: '-40px'}, 20, 'out'); 
+      return true;
+    }
+
     n.html(message);
 
     admin.center(n, {noTop: true});
-    n.transition({top: 0});
+    n.transition({top: 0}, 20, 'in');
 
-    setTimeout(function() { 
-      n.transition({top: '-40px'});
-    }, 3000);
+    if (p.fadeOut) { 
+      setTimeout(function() { n.transition({top: '-40px'}, 20, 'out'); }, p.fadeOut);
+    }
+
+  },
+
+  status: function(message, params) {
+
+    var p = {fadeOut: 3000, type: 'check', close: false};
+
+    if (params) {
+      for (var param in params) {
+        p[param] = params[param];
+      }
+    }
+
+    var s = $('.status');
+    var si = $('.status div');
+
+    s.removeClass('status_check').removeClass('status_error');
+    si.removeClass('sprite_check').removeClass('sprite_error');
+
+    s.addClass('status_' + p.type);
+    si.addClass('sprite_' + p.type);
+
+    if (p.close) { 
+      s.transition({opacity: 0}); 
+    }
+
+    $('.status_body').html(message);
+
+    admin.center(s, {noTop: true});
+    s.transition({opacity: 1}, 500, 'in');
+
+    if (p.fadeOut) { 
+      setTimeout(function() { s.transition({opacity: 0}, 500, 'out'); }, p.fadeOut);
+    }
 
   },
 
@@ -206,9 +264,9 @@ var details = {
     $.get(g.G_URL + 'ajx/details.php', {action: 'add', data: JSON.stringify(details)}, function(response) {
 
       if (response.error != false) {
-        admin.notify(response.error);
+        admin.status(response.error, {type: 'error'});
       } else {
-        admin.notify('Detail added successfully');
+        admin.status('Detail added successfully');
         setTimeout(function() { location.href = g.G_URL + '?details'; });
       }
 
@@ -276,13 +334,15 @@ var modify = {
 
     }
 
+    admin.notify('adding..', {fadeOut: false});
     $.get('/ajx/add.php', {type: type, data: JSON.stringify(data)}, function(response) {
 
+      admin.notify(false, {close: true});
       if (response.error != false) {
-        admin.notify(response.error);
+        admin.status(response.error, {type: 'error'});
       } else {
 
-        admin.notify(type + ' added successfully');
+        admin.status(type + ' added successfully');
 
         for (var i = 0, l = fields.length; i != l; i++) {
           $(fields[i]).val('');
@@ -301,4 +361,3 @@ var modify = {
   }
 
 }
-

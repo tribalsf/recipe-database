@@ -1,6 +1,13 @@
 
 <div class="footer">&nbsp;</div>
 
+<div class="status status_check">
+  <div class="sprite_check status_icon"></div>
+  <span class="status_body">This is a status message</span>
+</div>
+
+<div class="notify"></div>
+
 <script>
 
 g.G_URL = '<?=G_URL?>';
@@ -14,9 +21,10 @@ modify.init();
 <?else:?>
 listing.init();
 <?endif?>
+
+
 </script>
 
-<div class="notify"></div>
 
 </body>
 </html>
