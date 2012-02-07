@@ -5,19 +5,17 @@
   <div class="form">
   <form>
 
+    <input type="hidden" name="recipe_id" id="recipe_id" value="<?=$_REQUEST['recipe']?>" />
+
     <label for="title">Recipe Title</label>
-    <div class="input"><input type="text" name="title" id="title" value="<?=$recipe->title?>" /></div>
+    <div class="input"><input type="text" name="title" id="title" value="<?=isset($recipe) ? $recipe->title : ''?>" /></div>
 
     <div class="clear"></div>
 
     <label for="serving">Servings</label>
 
     <div class="input">
-      <select name="serving" id="serving">
-        <?for ($i = 1; $i != 100; $i++): ?>
-        <option value="<?=$i?>" <?=($i == $recipe->servings ? 'selected' : '')?>><?=$i?></option>
-        <?endfor?>
-      </select>
+      <input type="text" name="servings" id="servings" value="<?=isset($recipe) ? $recipe->servings : ''?>" />
     </div>
 
     <div class="clear"></div>
@@ -25,22 +23,7 @@
     <label for="prep_time">Prep Time</label>
 
     <div class="input">
-      <select name="prep_time_hrs" id="prep_time_hrs">
-        <?for ($i = 1; $i != 100; $i++): ?>
-        <option value="<?=$i?>" <?=($i == $recipe->prep_time_hrs ? 'selected' : '')?>><?=$i?></option>
-        <?endfor?>
-      </select>
-
-      <div class="sidelabel">hours</div>
-
-      <select name="prep_time_mins" id="prep_time_mins">
-        <?for ($i = 1; $i != 60; $i++): ?>
-        <option value="<?=$i?>" <?=($i == $recipe->prep_time_mins ? 'selected' : '')?>><?=$i?></option>
-        <?endfor?>
-      </select>
-
-      <div class="sidelabel">minutes</div>
-
+      <input type="text" name="prep_time" id="prep_time" value="<?=isset($recipe) ? $recipe->prep_time : ''?>" />
     </div>
 
     <div class="clear"></div>
@@ -48,25 +31,11 @@
     <label for="cook_time">Cook Time</label>
 
     <div class="input">
-      <select name="cook_time_hrs" id="cook_time_hrs">
-        <?for ($i = 1; $i != 100; $i++): ?>
-        <option value="<?=$i?>" <?=($i == $recipe->cook_time_hrs ? 'selected' : '')?>><?=$i?></option>
-        <?endfor?>
-      </select>
-
-      <div class="sidelabel">hours</div>
-
-      <select name="cook_time_mins" id="cook_time_mins">
-        <?for ($i = 1; $i != 60; $i++): ?>
-        <option value="<?=$i?>" <?=($i == $recipe->cook_time_mins ? 'selected' : '')?>><?=$i?></option>
-        <?endfor?>
-      </select>
-
-      <div class="sidelabel">minutes</div>
-
+      <input type="text" name="cook_time" id="cook_time" value="<?=isset($recipe) ? $recipe->cook_time : ''?>" />
     </div>
 
   </div>
+  <div class="clear"></div>
 
   <!-- END: main form -->
   <div class="form formright">
@@ -100,6 +69,17 @@
 
     <div class="ingredient_listing">
     <?require_once 'tpl/listing_ingredient.php'?>
+    </div>
+
+  </div>
+
+  <div class="clear"></div>
+
+  <div class="form">
+    <label for="set">Set Label</label>
+    <div class="button" data-action="create_set">Create a Set</div>
+    <div class="input">
+      <input type="text" name="set" id="set" value="" data-cmd="modify.set()" />
     </div>
 
   </div>

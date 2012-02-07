@@ -13,7 +13,7 @@ if (isset($_REQUEST['details'])) {
 
   require_once 'details.php';
 
-} elseif (isset($_REQUEST['recipe']) && is_numeric($_REQUEST['recipe'])) {
+} elseif (isset($_REQUEST['recipe']) && ( is_numeric($_REQUEST['recipe']) || $_REQUEST['recipe'] == 'add' )) {
 
   require_once 'modify.php';
 

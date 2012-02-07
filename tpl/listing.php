@@ -31,7 +31,7 @@
 </table>
 
 <div class="listing_buttons">
-  <div class="button button_disabled button_delete_selected" data-action="delete_selected">Delete Selected</div>
+  <div class="button button_disabled button_delete_selected" data-action="delete_selected"><?=isset($_REQUEST['deleted']) ? 'Undelete' : 'Delete'?> Selected</div>
 </div>
 
 <div class="clear"></div>

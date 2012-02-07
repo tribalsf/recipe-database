@@ -49,6 +49,14 @@ var admin = {
         case 'details' :
           location.href = g.G_URL + '?details';
           break;
+
+        case 'deleted' :
+          location.href = g.G_URL + '?deleted';
+          break;
+
+        case 'add_recipe' :
+          location.href = g.G_URL + '?recipe=add';
+          break;
       }
       
     });
@@ -80,12 +88,21 @@ var admin = {
           modify.add('instruction');
           break;
 
+        case 'create_set' :
+          modify.set();
+          break;
+
         case 'add_detail_recipe' :
           modify.add('detail');
           break;
 
         case 'delete_selected' :
           admin.delete_selected();
+          break;
+
+
+        case 'save_recipe' :
+          modify.save();
           break;
 
         case 'back' :
@@ -118,8 +135,12 @@ var admin = {
     admin.notify('Deleting selected..');
     $.get('ajx/delete.php', {datas: JSON.stringify(datas)}, function(response) {
 
-      console.log(response);
+      if (!response.error) {
 
+        $('.listing_active').fadeOut();
+        admin.status('Deleted');
+
+      }
 
     }, 'json');
 
@@ -139,17 +160,17 @@ var admin = {
     var n = $('.notify');
 
     if (p.close) { 
-      n.transition({top: '-40px'}, 20, 'out'); 
+      n.transition({opacity: 0}, 20, 'out'); 
       return true;
     }
 
     n.html(message);
 
-    admin.center(n, {noTop: true});
-    n.transition({top: 0}, 20, 'in');
+    admin.center(n);
+    n.transition({opacity: 1}, 20, 'in');
 
     if (p.fadeOut) { 
-      setTimeout(function() { n.transition({top: '-40px'}, 20, 'out'); }, p.fadeOut);
+      setTimeout(function() { n.transition({opacity: 0}, 20, 'out'); }, p.fadeOut);
     }
 
   },
@@ -179,7 +200,7 @@ var admin = {
 
     $('.status_body').html(message);
 
-    admin.center(s, {noTop: true});
+    admin.center(s, {top: 50});
     s.transition({opacity: 1}, 500, 'in');
 
     if (p.fadeOut) { 
@@ -191,16 +212,16 @@ var admin = {
   // center an absolute div
   center: function(e, params) {    
 
-  var middle = ($(window).width() / 2) - (e.outerWidth() / 2);
-  var top = ($(window).scrollTop() + 100*1);
+    var middle = ($(window).width() / 2) - (e.outerWidth() / 2);
+    var top = ($(window).scrollTop()*1);
 
-  if (params && params.noTop) {
-    $(e).css({left: middle + 'px'});
-  } else {
-    $(e).css({top: top + 'px', left: middle + 'px'});
-  }
+    if (params && params.top) {
+      $(e).css({top: (top +params.top*1) + 'px', left: middle + 'px'});
+    } else {
+      $(e).css({top: top + 'px', left: middle + 'px'});
+    }
 
-  return true;
+    return true;
 
   },
 
@@ -291,7 +312,7 @@ var modify = {
 
     $('.detail_type').change(modify.detailtype);
 
-    $('#ingredient, #instruction').keyup(function(e) {
+    $('#ingredient, #instruction, #set').keyup(function(e) {
 
       if (e.keyCode == 13) {
         var val = $(this).val();
@@ -310,6 +331,38 @@ var modify = {
     $('.detail_value').hide();
     $('.detail_value_' + g.site + '_' + type).fadeIn();
     $('.detail_value').val();
+  },
+
+  save: function() {
+
+    var datas = {
+      recipe_id: modify.recipe_id,
+      title: $('#title').val(),
+      servings: $('#servings').val(),
+      prep_time: $('#prep_time').val(),
+      cook_time: $('#cook_time').val(),
+    };
+
+    if (datas.title == '') {
+      admin.status('You must specify a title to save', {type: 'error'});
+      return true;
+    }
+
+    admin.notify('Saving..');
+
+    $.get('/ajx/save.php', {data: JSON.stringify(datas)}, function(response) {
+
+      admin.notify(false, {close: true});
+      if (response.error) {
+        admin.status(response.message, {'type': error});
+      } else {
+        admin.status(response.message);
+        modify.recipe_id = response.recipe_id;
+        setTimeout(function() { location.href = g.G_URL + '?recipe=' + response.recipe_id; }, 1000);
+      }
+
+    }, 'json');
+
   },
 
   add: function(type) {
@@ -334,6 +387,11 @@ var modify = {
 
     }
 
+    if (modify.recipe_id == 'add') {
+      admin.status('You must first save your recipe', {type: 'error'});
+      return true;
+    }
+
     admin.notify('adding..', {fadeOut: false});
     $.get('/ajx/add.php', {type: type, data: JSON.stringify(data)}, function(response) {
 
@@ -355,6 +413,27 @@ var modify = {
         $('.' + type + '_listing').html(response.html);
         $('.newrow').transition({backgroundColor: '#fff'}, '1000', 'in');
       }
+
+    }, 'json');
+
+  },
+
+  set: function() {
+
+    var set = $('#set').val();
+
+    console.log(set);
+
+    if (set == '') {
+      admin.status('You must specify a set name', {type: 'error'});
+    }
+
+    admin.notify('Creating set..');
+    var data = {recipe_id: modify.recipe_id, set: set};
+
+    $.get('/ajx/set.php', { data: JSON.stringify(data) }, function(response) {
+
+      console.log(response);
 
     }, 'json');
 

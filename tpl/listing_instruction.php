@@ -1,3 +1,4 @@
+    
     <table class="listing sublisting" border="0" cellspacing="0" cellpadding="0">
 
       <tr>
@@ -5,7 +6,16 @@
         <th>title</th>
       </tr>
 
+      <?$set = false?>
       <?foreach ($instructions as $instruction): ?>
+
+      <?if ($instruction->set != '' && $instruction->set != $set):?>
+      <?$set = $instruction->set?>
+      <tr>
+        <td colspan="2"><b>set: <?=$set?></b></td>
+      </tr>
+      <?endif?>
+
       <tr <?=(isset($newone) && $newone == $instruction->title ? 'class="newrow"' : '')?>>
         <td><?=$instruction->step?></td>
         <td>

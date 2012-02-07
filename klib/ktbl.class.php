@@ -202,6 +202,7 @@ abstract class ktbl extends kdb {
     $result = self::i()->q($query, $_data);
 
     if ($this->_nullkey) {
+
       $this->primary[key($this->primary)] = $result->insert_id;
       $this->{key($this->primary)} = $result->insert_id;
     }

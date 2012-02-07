@@ -250,7 +250,7 @@ body {
 .notify {
 
   position: absolute;
-  top: -40px;
+  top: 0;
   left: 0;
   background-color: #faf7ab;
   text-align: center;
@@ -261,6 +261,10 @@ body {
   border-left: 1px solid #999;
   border-right: 1px solid #999;
   border-bottom: 1px solid #999;
+
+  opacity: 0;
+  -moz-opacity: 0;
+  -webkit-opacity: 0;
 
   -moz-box-shadow: 0px 0px 5px #999;
   -webkit-box-shadow: 0px 0px 5px #999;

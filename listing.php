@@ -9,7 +9,11 @@ if (isset($_REQUEST['page']) && is_numeric($_REQUEST['page'])) {
   $limit = ($page - 1) * $perpage.', '.$perpage;
 }
 
-$recipes = recipe::gets('ORDER BY CREATED DESC LIMIT '.$limit, array(), array('found_rows' => 1));
+if (isset($_REQUEST['deleted'])) {
+  $recipes = recipe::gets('WHERE deleted <> 0 ORDER BY CREATED DESC LIMIT '.$limit, array(), array('found_rows' => 1));
+} else {
+  $recipes = recipe::gets('WHERE deleted <> 1 ORDER BY CREATED DESC LIMIT '.$limit, array(), array('found_rows' => 1));
+}
 $rows = $recipes->foundrows();
 $pages = ceil($rows / $perpage);
 
