@@ -8,18 +8,15 @@
       <?if ($ingredient->set != '' && $ingredient->set != $set):?>
       <?$set = $ingredient->set?>
       <tr>
-        <td colspan="2"><b>set: <?=$set?></b></td>
+        <th style="text-align: right;"><?=$set?></th>
       </tr>
       <?endif?>
-
-
-
       <tr>
         <td <?=(isset($newone) && $newone == $ingredient->title ? 'class="newrow"' : '')?>>
           <div 
             class="delete_button" 
             data-type="ingredient" 
-            data-value='<?=json_encode(array('recipe_id' => $ingredient->recipe_id, 'title' => $ingredient->title))?>'>
+            data-value='<?=json_encode(array('recipe_id' => $ingredient->recipe_id, 'title' => $ingredient->title), JSON_HEX_APOS)?>'>
             <div class="sprite sprite_delete"></div></div>
           <?=$ingredient->title?>
         </td>

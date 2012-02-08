@@ -19,7 +19,7 @@ if (isset($_REQUEST['type']) && !empty($_REQUEST['type'])) {
 
         $ingredient = new ingredient($data['recipe_id'], $data['title']);
         $ingredient->save();
-        $ingredients = ingredient::gets('WHERE recipe_id = %n', $data['recipe_id']);
+        $ingredients = ingredient::gets('WHERE recipe_id = %n ORDER BY `set`', $data['recipe_id']);
         $newone = $data['title'];
 
         ob_start();
@@ -41,7 +41,7 @@ if (isset($_REQUEST['type']) && !empty($_REQUEST['type'])) {
         $instruction = new instruction($data['recipe_id'], $data['step']);
         $instruction->title = $data['title'];
         $instruction->save();
-        $instructions = instruction::gets('WHERE recipe_id = %n', $data['recipe_id']);
+        $instructions = instruction::gets('WHERE recipe_id = %n ORDER BY `set`', $data['recipe_id']);
         $newone = $data['title'];
 
         ob_start();
@@ -57,7 +57,8 @@ if (isset($_REQUEST['type']) && !empty($_REQUEST['type'])) {
 
       $data = json_decode($_REQUEST['data'], true);
 
-      $dr = new detail_recipe($data['recipe_id'], $data['type'], $data['value']);
+      $dr = new detail_recipe($data['recipe_id'], $data['name'], $data['value']);
+      $dr->type = $data['type'];
       $dr->save();
       $detail_recipe = detail_recipe::gets('WHERE recipe_id = %n', $data['recipe_id']);
       $newone = $data['value'];

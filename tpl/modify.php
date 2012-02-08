@@ -89,22 +89,33 @@
   <div class="form formleft">
 
     <label for="details">Details</label>
+    <div class="clear"></div>
     <div class="button" data-action="add_detail_recipe">Add</div>
 
     <div class="input" id="details">
 
-      <select name="detail_type" class="detail_type" id="detail_type">
-        <?foreach ($details[$site] as $key=>$value):?>
-        <option value="<?=$key?>"><?=$key?></option>
+      <select name="detail_name" class="detail_name" id="detail_name">
+        <?foreach ($details as $name=>$value):?>
+        <option value="<?=$name?>"><?=$name?></option>
         <?endforeach?>
       </select>
 
-      <?foreach ($details[$site] as $key=>$value):?>
-      <select name="detail_value" id="detail_value" class="detail_value detail_value_<?=$site?>_<?=str_replace(' ', '_', $key)?>">
+
+      <?foreach ($details as $name=>$value):?>
+      <input type="hidden" value="<?=$value[0]['type']?>" class="detail_type_<?=str_replace(' ', '_', $name)?>" />
+      <?if ($value[0]['type'] == 'choice'): ?>
+      <select name="detail_value" id="detail_value" class="detail_value detail_value_<?=str_replace(' ', '_', $name)?>">
         <?foreach ($value as $val):?>
-        <option value="<?=$val?>"><?=$val?></option>
+        <option value="<?=$val['value']?>"><?=$val['value']?></option>
         <?endforeach?>
       </select>
+
+      <?elseif ($value[0]['type'] == 'string'): ?>
+
+      <input type="text" name="detail_value" id="detail_value" class="detail_value detail_value_<?=str_replace(' ', '_', $name)?>" />
+      <?else:?>
+      <input type="hidden" name="detail_value" value="" id="detail_value" class="detail_value detail_value_<?=str_replace(' ', '_', $name)?>" />
+      <?endif?>
       <?endforeach?>
 
     </div>
@@ -113,7 +124,6 @@
 
     <div class="detail_listing">
     <?require_once 'tpl/listing_detail.php'; ?>
-
     </div>
   </div>
 

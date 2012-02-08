@@ -15,8 +15,9 @@ if (is_numeric($_REQUEST['recipe'])) {
 
 $details = array();
 foreach (detail::gets() as $detail) {
-  $details[$detail->site][$detail->type][] = $detail->value;
+  $details[$detail->name][] = $detail->data();
 }
+
 
 require_once 'tpl/modify.php';
 

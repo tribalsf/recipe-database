@@ -2,8 +2,8 @@
 
 class detail_recipe extends ktbl {
 
-  public function __construct($recipe_id,$type,$value) {
-    parent::__construct(array('recipe_id' => $recipe_id, 'type' => $type, 'value' => $value));
+  public function __construct($recipe_id,$name,$value) {
+    parent::__construct(array('recipe_id' => $recipe_id, 'name' => $name, 'value' => $value));
   }
 
 }

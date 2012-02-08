@@ -1,4 +1,5 @@
 
+<div class="clear"></div>
 <div class="container">
 
 <table class="listing" border="0" cellspacing="0" cellpadding="0">

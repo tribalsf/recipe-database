@@ -16,6 +16,6 @@ foreach ($instructions as $instruction) {
 }
 $instructions->save();
 
-hpr($data);
+echo json_encode($data);
 
 

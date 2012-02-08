@@ -12,17 +12,12 @@ if (isset($_REQUEST['action'])) {
 
       $data = json_decode($_REQUEST['data'], true);
 
-      if (empty($data['type'])) {
-        $error = 'You must specify a type';
+      if (empty($data['name'])) {
+        $error = 'You must specify a name';
         break;
       }
 
-      if (empty($data['value'])) {
-        $error = 'You must specify a value';
-        break;
-      }
-
-      $detail = new detail($data['site'], $data['type'], $data['value']);
+      $detail = new detail($data['name'], $data['type'], $data['value']);
       $detail->save();
 
       break;

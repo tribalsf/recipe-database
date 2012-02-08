@@ -18,10 +18,11 @@ admin.init();
 <?if (isset($_REQUEST['recipe'])):?>
 modify.recipe_id = '<?=$_REQUEST['recipe']?>';
 modify.init();
+<?elseif (isset($_REQUEST['details'])):?>
+details.init();
 <?else:?>
 listing.init();
 <?endif?>
-
 
 </script>
 

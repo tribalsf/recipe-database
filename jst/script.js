@@ -3,33 +3,12 @@ var admin = {
 
   init: function() {
 
+    admin.handlers();
+
     // firefox not obeying 'selected'
     if (document.forms[0]) {
       document.forms[0].reset(); 
     }
-
-    // global listing handler, show _hover and display the hidden delete button
-    $('.listing tr').hover(function() {
-
-      if ($(this).children().is('TD')) {
-        $(this).addClass('listing_hover');
-        $(this).find('.delete_button').transition({opacity: 1}, 0);
-      }
-
-    }, function() {
-      $(this).removeClass('listing_hover');
-      $(this).find('.delete_button').transition({opacity: 0}, 0);
-    });
-
-
-    $('.delete_button').click(function(e) {
-      e.stopPropagation();
-      $(this).closest('TR').toggleClass('listing_active');
-
-      $('.listing_active').length > 0 ?  $('.button_delete_selected').removeClass('button_disabled') : 1;
-      $('.listing_active').length == 0 ?  $('.button_delete_selected').addClass('button_disabled') : 1;
-
-    });
 
     $('.site_buttons div').hover(function() { $(this).toggleClass('site_button_hover'); });
     $('.site_buttons div').click(function() { 
@@ -113,6 +92,34 @@ var admin = {
           console.log($(this).data('action'));
           break;
       }
+
+    });
+
+  },
+
+  handlers: function() {
+
+    // global listing handler, show _hover and display the hidden delete button
+    $('.listing tr').unbind('hover');
+    $('.listing tr').hover(function() {
+
+      if ($(this).children().is('TD')) {
+        $(this).addClass('listing_hover');
+        $(this).find('.delete_button').transition({opacity: 1}, 0);
+      }
+
+    }, function() {
+      $(this).removeClass('listing_hover');
+      $(this).find('.delete_button').transition({opacity: 0}, 0);
+    });
+
+    $('.delete_button').unbind('click');
+    $('.delete_button').click(function(e) {
+      e.stopPropagation();
+      $(this).closest('TR').toggleClass('listing_active');
+
+      $('.listing_active').length > 0 ?  $('.button_delete_selected').removeClass('button_disabled') : 1;
+      $('.listing_active').length == 0 ?  $('.button_delete_selected').addClass('button_disabled') : 1;
 
     });
 
@@ -213,7 +220,8 @@ var admin = {
   center: function(e, params) {    
 
     var middle = ($(window).width() / 2) - (e.outerWidth() / 2);
-    var top = ($(window).scrollTop()*1);
+    //var top = ($(window).scrollTop()*1);
+    var top = 0;
 
     if (params && params.top) {
       $(e).css({top: (top +params.top*1) + 'px', left: middle + 'px'});
@@ -254,7 +262,7 @@ var listing = {
       if ($(this).children().is('TD') && $(this).data('recipe') != undefined) {
         $('.listing tr').removeClass('listing_selected');
         $(this).addClass('listing_selected');
-        $(this).transition({scale: 1.2});
+        $(this).transition({scale: 1.2}, function() { $(this).transition({scale: 1.0}, 100); });
         location.href = g.G_URL + '?recipe=' + $(this).data('recipe');
       }
     });
@@ -274,10 +282,26 @@ var listing = {
 
 var details = {
 
+  init: function() {
+
+    $('#value').keyup(function(e) {
+
+      if (e.keyCode == 13) {
+        var val = $(this).val();
+        var cmd = $(this).data('cmd');
+        if (val && val != '' && cmd) {
+          eval(cmd);
+        }
+      }
+
+    });
+
+  },
+
   add: function() {
 
     var details = {
-      site: $('#site').val(),
+      name: $('#name').val(),
       type: $('#type').val(),
       value: $('#value').val()
     };
@@ -310,7 +334,7 @@ var modify = {
 
     modify.detailtype();
 
-    $('.detail_type').change(modify.detailtype);
+    $('.detail_name').change(modify.detailtype);
 
     $('#ingredient, #instruction, #set').keyup(function(e) {
 
@@ -327,10 +351,10 @@ var modify = {
   },
 
   detailtype: function() {
-    var type = $('.detail_type').val().replace(/ /g, '_');
+    var type = $('.detail_name').val().replace(/ /g, '_');
     $('.detail_value').hide();
-    $('.detail_value_' + g.site + '_' + type).fadeIn();
-    $('.detail_value').val();
+    $('.detail_value_' + type).fadeIn();
+    //$('.detail_value').val();
   },
 
   save: function() {
@@ -380,8 +404,9 @@ var modify = {
         break;
 
       case 'detail':
-        var valueid = ('.detail_value_' + g.site + '_' + $('#detail_type').val().replace(/ /g, '_'));
-        var data = { recipe_id: modify.recipe_id, type: $('#detail_type').val(), value: $(valueid).val() }
+        var typeid = ('.detail_type_' + $('#detail_name').val().replace(/ /g, '_'));
+        var valueid = ('.detail_value_' + $('#detail_name').val().replace(/ /g, '_'));
+        var data = { recipe_id: modify.recipe_id, name: $('#detail_name').val(), type: $(typeid).val(), value: $(valueid).val() }
         var fields = ['#detail_value'];
         break;
 
@@ -411,7 +436,14 @@ var modify = {
         }
 
         $('.' + type + '_listing').html(response.html);
-        $('.newrow').transition({backgroundColor: '#fff'}, '1000', 'in');
+        $('.newrow').transition({backgroundColor: '#fff'}, '1000', 'in', function() {
+
+          $('.newrow').attr('style', '');
+          $(document).find('.newrow').removeClass('newrow');
+          
+        });
+
+        admin.handlers();
       }
 
     }, 'json');
@@ -426,6 +458,7 @@ var modify = {
 
     if (set == '') {
       admin.status('You must specify a set name', {type: 'error'});
+      return true;
     }
 
     admin.notify('Creating set..');
@@ -433,7 +466,11 @@ var modify = {
 
     $.get('/ajx/set.php', { data: JSON.stringify(data) }, function(response) {
 
-      console.log(response);
+      admin.notify(false, {close: true});
+      admin.status('Set Created');
+      setTimeout(function() {
+        location.href = g.G_URL + '?recipe=' + modify.recipe_id;
+      }, 1000);
 
     }, 'json');
 

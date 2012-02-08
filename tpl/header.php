@@ -34,4 +34,5 @@
   <div class="clear"></div>
 
 </div>
+<div class="shadow"><div></div></div>
 
