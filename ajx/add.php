@@ -38,7 +38,7 @@ if (isset($_REQUEST['type']) && !empty($_REQUEST['type'])) {
         $error = 'You must specify an instruction';
       }  else {
 
-        $instruction = new instruction($data['recipe_id'], $data['step']);
+        $instruction = new instruction($data['recipe_id'], $data['step'], '');
         $instruction->title = $data['title'];
         $instruction->save();
         $instructions = instruction::gets('WHERE recipe_id = %n ORDER BY `set`', $data['recipe_id']);

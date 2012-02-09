@@ -13,10 +13,12 @@
 
 <div class="header">
 
+<!--
   <div class="site_buttons">
     <div class="site_button <?=(isset($_REQUEST['site']) && $_REQUEST['site'] == 'grilling') ? 'site_button_active' : ''?>" data-value="grilling">grilling.com</div>
     <div class="site_button <?=(!isset($_REQUEST['site']) || $_REQUEST['site'] == 'hiddenvalley') ? 'site_button_active' : ''?>" data-value="hiddenvalley">hiddenvalley.com</div>
   </div>
+--!>
   <div class="site_buttons">
     <div class="site_button <?=(isset($_REQUEST['details']) ? 'site_button_active' : '')?>" data-value="details">Details</div>
   </div>

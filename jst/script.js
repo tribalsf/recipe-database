@@ -262,9 +262,11 @@ var listing = {
       if ($(this).children().is('TD') && $(this).data('recipe') != undefined) {
         $('.listing tr').removeClass('listing_selected');
         $(this).addClass('listing_selected');
-        $(this).transition({scale: 1.2}, function() { $(this).transition({scale: 1.0}, 100); });
+        //$(this).transition({scale: 1.2}, function() { $(this).transition({scale: 1.0}, 100); });
+        admin.notify('Loading Recipe..');
         location.href = g.G_URL + '?recipe=' + $(this).data('recipe');
       }
+
     });
 
     $('.page').hover(function() { $(this).toggleClass('page_hover'); });
