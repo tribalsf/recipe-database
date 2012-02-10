@@ -1,12 +1,15 @@
 
 <div class="container">
 
-  <div class="button" data-action="save_recipe">Save</div>
-  <div class="button" data-action="back">Back</div>
-  <div class="button button_disabled button_delete_selected" data-action="delete_selected">Delete Selected</div>
+  <div class="clear"></div>
+  <div class="buttons">
+    <div class="button" data-action="save_recipe">Save</div>
+    <div class="button" data-action="back">Back</div>
+    <div class="button button_disabled button_delete_selected" data-action="delete_selected">Delete Selected</div>
+    <div class="clear"></div>
+  </div>
 
   <div class="clear"></div>
-
 
   <!-- START: main form -->
   <div class="form">
@@ -45,6 +48,7 @@
   <div class="clear"></div>
 
   <!-- END: main form -->
+
   <div class="form formright">
 
     <label for="instruction">Instructions</label>
@@ -97,7 +101,7 @@
 
     <label for="details">Details</label>
     <div class="clear"></div>
-    <div class="button" data-action="add_detail_recipe">Add</div>
+    <div class="button" data-action="add_recipe_detail">Add</div>
 
     <div class="input" id="details">
 

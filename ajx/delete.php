@@ -16,8 +16,8 @@ foreach ($datas as $data) {
       $grouped['detail'][] = $data['value'];
       break;
 
-    case 'detail_recipe' :
-      $grouped['detail_recipe'][] = $data['value'];
+    case 'recipe_detail' :
+      $grouped['recipe_detail'][] = $data['value'];
       break;
 
     case 'recipe' :
@@ -53,9 +53,9 @@ if (isset($grouped['detail'])) {
   }
 }
 
-if (isset($grouped['detail_recipe'])) {
-  foreach ($grouped['detail_recipe'] as $dr) {
-    kdb::i()->q('DELETE FROM detail_recipe WHERE recipe_id = %n AND `type` = %s AND `value` = %s', $dr);
+if (isset($grouped['recipe_detail'])) {
+  foreach ($grouped['recipe_detail'] as $dr) {
+    kdb::i()->q('DELETE FROM recipe_detail WHERE recipe_id = %n AND `type` = %s AND `value` = %s', $dr);
   }
 }
 

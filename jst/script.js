@@ -71,7 +71,7 @@ var admin = {
           modify.set();
           break;
 
-        case 'add_detail_recipe' :
+        case 'add_recipe_detail' :
           modify.add('detail');
           break;
 
@@ -285,6 +285,11 @@ var listing = {
 var details = {
 
   init: function() {
+
+    $('.formmason').masonry({
+      itemSelector: '.formsmall',
+      columnWidth: 320
+    });
 
     $('#value').keyup(function(e) {
 
