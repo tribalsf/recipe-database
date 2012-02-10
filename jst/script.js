@@ -166,7 +166,7 @@ var admin = {
 
     var n = $('.notify');
 
-    if (p.close) { 
+    if (p.close || message == false) { 
       n.transition({opacity: 0}, 20, 'out'); 
       return true;
     }
@@ -353,6 +353,50 @@ var modify = {
         }
       }
 
+    });
+
+    $('#image').change(function(e) {
+
+      admin.notify('Uploading file..');
+
+      var file = e.target.files[0];
+
+      if (file.type == '') {
+        admin.notify(false);
+        admin.status('Unknown file type');
+        return true;
+      }
+
+      if (!file.type.match('image.*')) {
+        admin.notify(false);
+        admin.status('Your file must be a proper image');
+        return true;
+      }
+
+      var reader = new FileReader();
+      var content = '';
+
+      reader.onload = (function(theFile) {
+        return function(e) {
+
+          console.log(e.target.result.length);
+          console.log(theFile.name);
+          admin.notify(false);
+
+          var xhr = new XMLHttpRequest();
+          xhr.open('POST', '/ajx/image.php', true);
+          xhr.upload.onprogress = function(e) { 
+            console.log(Math.round((e.loaded / e.total) * 100)); 
+          };
+
+          xhr.send(e.target.result);
+
+        };
+
+      })(file);
+      reader.readAsBinaryString(file);
+
+      
     });
 
   },

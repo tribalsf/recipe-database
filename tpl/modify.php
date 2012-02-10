@@ -97,6 +97,16 @@
 
   <div class="clear"></div>
 
+  <div class="form formright">
+    <label for="image">Image</label>
+    <div class="clear"></div>
+    <div class="filebox"> image/<?=$image->type?> at <?=number_format(strlen($image->data))?> bytes </div>
+    <img src="data:image/<?=$image->tpe?>;base64,<?=base64_encode($image->data)?>" class="thumb" />
+    <div class="filebox">
+      <input class="file" type="file" id="image" name="image" />
+    </div>
+  </div>
+
   <div class="form formleft">
 
     <label for="details">Details</label>
@@ -110,7 +120,6 @@
         <option value="<?=$name?>"><?=$name?></option>
         <?endforeach?>
       </select>
-
 
       <?foreach ($details as $name=>$value):?>
       <input type="hidden" value="<?=$value[0]['type']?>" class="detail_type_<?=str_replace(' ', '_', $name)?>" />

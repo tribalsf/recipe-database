@@ -182,10 +182,6 @@ body {
   width: 430px;
 }
 
-.formmason { 
-  
-}
-
 .formsmall {
 
   width: 270px;
@@ -196,6 +192,16 @@ body {
   -o-transition-duration: 0.7s;
   transition-duration: 0.7s;
 
+}
+
+.thumb {
+  width: 420px;
+}
+
+.filebox {
+  margin: 0 auto;
+  text-align: center;
+  padding: 5px;
 }
 
 .form label {
@@ -291,6 +297,7 @@ body {
 
   top: 0;
   left: 0;
+  z-index: 200;
   position: fixed;
   background-color: #faf7ab;
   text-align: center;
@@ -314,7 +321,7 @@ body {
 
 .status {
   position: fixed;
-  top: 60px;
+  top: 100px;
   left: 800px;
   text-align: center;
   font-size: 14px;
@@ -322,6 +329,7 @@ body {
   color: #666;
   padding: 20px 50px;
   border: 1px solid #999;
+  z-index: 200;
 
   box-shadow: 0px 0px 5px #999;
   -moz-box-shadow: 0px 0px 5px #999;
