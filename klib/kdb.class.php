@@ -9,7 +9,7 @@ class kdb {
   private static $_queryLimit = 10; 
   private static $_rowLimit = 10; 
 
-  const types = '/(?<!\\\)%(n|s|t|f|l)/';
+  const types = '/(?<!\\\)%(n|s|t|f|l|d)/';
 	const manip = '/select|insert|update|delete|replace/i';
 	
 	public static $debug;
@@ -70,6 +70,8 @@ class kdb {
 
 		}
 
+    $datas = array();
+
 		if (preg_match_all(self::types, $query, $types)) {
 
 			if (count($types[0]) != count($params)) {
@@ -77,6 +79,7 @@ class kdb {
 				$this->throwexec($error);
 				return false;
 			}
+
 
 			foreach ($params as $key=>$param) {
 
@@ -100,6 +103,11 @@ class kdb {
 							$param = '"[[PERCENT]]'.$this->esc($param).'[[PERCENT]]"';
 							break;
 
+					case '%d' :
+              $datas[$key] = $param;
+							$param = '"[[DATA'.$key.']]"';
+              break;
+
 					case '%f' :
 							$param = '`'.$this->esc($param).'`';
 							break;
@@ -109,16 +117,20 @@ class kdb {
 						break;
 				}
 
-
 				$query = preg_replace('/(?<!\\\)'.$types[0][$key].'/', str_replace('\\','\\\\', $param), $query, 1);
 
 			}
-
 
 		}
 
 		$query = preg_replace('/(?<!\\\)%t/', '"'.date("Y-m-d H:i:s").'"',$query);
     $query = str_replace('[[PERCENT]]', '%', $query);
+
+    if (count($datas) > 0) {
+      foreach ($datas as $spot=>$data) {
+        $query = str_replace('[[DATA'.$spot.']]', $this->esc($data), $query);
+      }
+    }
 
 		if ($this->debug()) {
 

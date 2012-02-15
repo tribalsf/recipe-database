@@ -18,5 +18,9 @@ foreach (detail::gets() as $detail) {
   $details[$detail->name][] = $detail->data();
 }
 
+
 require_once 'tpl/modify.php';
 
+$xml = '<xml><node1></node1></xml>';
+
+cpr($xml, 'xml');

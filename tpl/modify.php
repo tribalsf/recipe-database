@@ -100,8 +100,14 @@
   <div class="form formright">
     <label for="image">Image</label>
     <div class="clear"></div>
+    <?if (isset($image)): ?>
     <div class="filebox"> image/<?=$image->type?> at <?=number_format(strlen($image->data))?> bytes </div>
-    <img src="data:image/<?=$image->tpe?>;base64,<?=base64_encode($image->data)?>" class="thumb" />
+    <?endif?>
+    <?if (isset($image)): ?>
+    <a href="image.php?recipe_id=<?=$image->recipe_id?>" target="_new">
+      <img src="data:image/<?=$image->tpe?>;base64,<?=base64_encode($image->data)?>" class="thumb" />
+    </a>
+    <?endif?>
     <div class="filebox">
       <input class="file" type="file" id="image" name="image" />
     </div>

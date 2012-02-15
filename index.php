@@ -1,7 +1,10 @@
 <?
 
+
 require_once 'config.php';
 require_once 'tpl/header.php';
+
+
 
 $site = 'hiddenvalley';
 
@@ -26,3 +29,4 @@ if (isset($_REQUEST['details'])) {
 require_once 'tpl/footer.php';
 
 ?>
+

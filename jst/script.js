@@ -357,36 +357,61 @@ var modify = {
 
     $('#image').change(function(e) {
 
-      admin.notify('Uploading file..');
+      if (!modify.recipe_id || modify.recipe_id == 'add') {
+        admin.status('You must save your main recipe settings first');
+        return true;
+      }
 
       var file = e.target.files[0];
 
       if (file.type == '') {
-        admin.notify(false);
         admin.status('Unknown file type');
         return true;
       }
 
       if (!file.type.match('image.*')) {
-        admin.notify(false);
         admin.status('Your file must be a proper image');
         return true;
       }
 
+      var imagetype =  file.type.substr(file.type.indexOf('/')+1);
+      imagetype = (imagetype == 'jpeg') ? 'jpg' : imagetype;
+      console.log(file.size);
+
       var reader = new FileReader();
-      var content = '';
 
       reader.onload = (function(theFile) {
+
         return function(e) {
 
-          console.log(e.target.result.length);
-          console.log(theFile.name);
-          admin.notify(false);
+          admin.notify('Uploading Image.. 0%', {fadeOut: false});
 
           var xhr = new XMLHttpRequest();
-          xhr.open('POST', '/ajx/image.php', true);
+          xhr.open('POST', '/ajx/image.php?recipe_id=' + modify.recipe_id + '&imagetype=' + imagetype, true);
+          xhr.setRequestHeader('Content-Type', 'multipart/form-data');
+          xhr.setRequestHeader('X-File-Name', file.name);
+          xhr.setRequestHeader('X-File-Size', file.size);
+          xhr.setRequestHeader('X-File-Type', file.type); //add additional header
+
           xhr.upload.onprogress = function(e) { 
-            console.log(Math.round((e.loaded / e.total) * 100)); 
+            var progress = Math.round((e.loaded / e.total) * 100) + '%'; 
+            $('.notify').html('Uploading Image.. ' + progress);
+          };
+
+          xhr.upload.onloadend = function(response) { 
+            admin.notify(false);
+            admin.status('Upload Complete');
+            setTimeout(function() { 
+              location.href = g.G_URL + '?recipe=' + modify.recipe_id;
+            }, 3000);
+          };
+
+          xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4) {
+              if (xhr.status == 200) {
+                console.log(JSON.parse(xhr.response));
+              }
+            }
           };
 
           xhr.send(e.target.result);
@@ -394,8 +419,8 @@ var modify = {
         };
 
       })(file);
-      reader.readAsBinaryString(file);
 
+      reader.readAsBinaryString(file);
       
     });
 

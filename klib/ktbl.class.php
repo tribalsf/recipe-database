@@ -287,6 +287,12 @@ abstract class ktbl extends kdb {
 			case 'timestamp' :
 				return '%t';
 
+			case 'blob' :
+			case 'longblob' :
+			case 'tinyblob' :
+			case 'mediumblob' :
+				return '%d';
+
 			default :
 				return '%s';
 				break;

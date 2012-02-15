@@ -17,6 +17,8 @@
     </div>
   </div>
 
+</div>
+
   <div class="formmason">
   <?foreach ($details as $name=>$detail):?>
 
@@ -50,6 +52,8 @@
   <?endforeach?>
 
   </div>
+  
+  <div class="container">
 
   <div class="clear"></div>
 
