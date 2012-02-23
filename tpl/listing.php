@@ -7,8 +7,8 @@
   <tr>
     <th>id</th>
     <th>title</th>
+    <th>site</th>
     <th>created</th>
-    <th>updated</th>
     <th>servings</th>
     <th>prep time</th>
     <th>cook time</th>
@@ -21,8 +21,8 @@
       <div class="delete_button" data-type="recipe" data-value='<?=json_encode(array('recipe_id' => $recipe->id))?>'><div class="sprite sprite_delete"></div></div>
       <?=$recipe->title?>
     </td>
+    <td><?=$recipe->site?></td>
     <td><?=$recipe->created_format?></td>
-    <td><?=$recipe->updated_format?></td>
     <td><?=$recipe->servings?></td>
     <td><?=$recipe->prep_time?></td>
     <td><?=$recipe->cook_time?></td>

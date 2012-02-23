@@ -2,6 +2,7 @@
 <div class="container">
 
   <div class="clear"></div>
+
   <div class="buttons">
     <div class="button" data-action="save_recipe">Save</div>
     <div class="button" data-action="back">Back</div>
@@ -16,7 +17,6 @@
   <form>
 
     <input type="hidden" name="recipe_id" id="recipe_id" value="<?=$_REQUEST['recipe']?>" />
-
     <label for="title">Recipe Title</label>
     <div class="input"><input type="text" name="title" id="title" value="<?=isset($recipe) ? $recipe->title : ''?>" /></div>
 
@@ -27,7 +27,6 @@
     <div class="input">
       <input type="text" name="servings" id="servings" value="<?=isset($recipe) ? $recipe->servings : ''?>" />
     </div>
-
     <div class="clear"></div>
 
     <label for="prep_time">Prep Time</label>
@@ -37,6 +36,12 @@
     </div>
 
     <div class="clear"></div>
+
+    <div class="site_buttons site_buttons_site">
+      <div class="site_button <?=(isset($recipe) && $recipe->site == 'grilling') ? 'site_button_active' : ''?>" data-value="grilling">grilling.com</div>
+      <div class="site_button <?=(isset($recipe) && $recipe->site == 'hiddenvalley') ? 'site_button_active' : ''?>" data-value="hiddenvalley">hiddenvalley.com</div>
+      <div class="site_button <?=(!isset($recipe) || $recipe->site == 'both') ? 'site_button_active' : ''?>" data-value="both">both</div>
+    </div>
 
     <label for="cook_time">Cook Time</label>
 
@@ -117,7 +122,7 @@
 
     <label for="details">Details</label>
     <div class="clear"></div>
-    <div class="button" data-action="add_recipe_detail">Add</div>
+    <div class="button" data-action="add_recipeDetail">Add</div>
 
     <div class="input" id="details">
 

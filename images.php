@@ -4,7 +4,7 @@ highlight_file('images.php');
 
 require_once 'config.php';
 
-$images = recipe_image::gets('WHERE recipe_id = 721');
+$images = recipeImage::gets('WHERE recipe_id = 721');
 
 foreach ($images as $image) {
   hpr($image->recipe_id.'  '.$image->name.', '.number_format(strlen($image->data)));

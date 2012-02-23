@@ -4,9 +4,7 @@ require_once 'ajax.php';
 
 $d = json_decode($_REQUEST['data'], true);
 
-$error = false;
-$message = false;
-$recipe_id = false;
+$error = $message = $recipe_id = false;
 
 if (isset($d['recipe_id']) && is_numeric($d['recipe_id'])) {
 
@@ -15,6 +13,7 @@ if (isset($d['recipe_id']) && is_numeric($d['recipe_id'])) {
   $recipe = new recipe($d['recipe_id']);
   $recipe->updated = 'now()';
   $recipe->title = $d['title'];
+  $recipe->site = $d['site'];
   $recipe->servings = $d['servings'];
   $recipe->prep_time = $d['prep_time'];
   $recipe->cook_time = $d['cook_time'];

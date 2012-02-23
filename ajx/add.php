@@ -57,10 +57,10 @@ if (isset($_REQUEST['type']) && !empty($_REQUEST['type'])) {
 
       $data = json_decode($_REQUEST['data'], true);
 
-      $dr = new recipe_detail($data['recipe_id'], $data['name'], $data['value']);
+      $dr = new recipeDetail($data['recipe_id'], $data['name'], $data['value']);
       $dr->type = $data['type'];
       $dr->save();
-      $recipe_detail = recipe_detail::gets('WHERE recipe_id = %n', $data['recipe_id']);
+      $recipeDetail = recipeDetail::gets('WHERE recipe_id = %n', $data['recipe_id']);
       $newone = $data['value'];
 
       ob_start();

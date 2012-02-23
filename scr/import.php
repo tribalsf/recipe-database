@@ -83,7 +83,7 @@ $rows = kdb::i()->q("
 
 
 $rows = kdb::i()->q("
-  INSERT INTO recipe_detail (recipe_id, name, type, value)
+  INSERT INTO recipeDetail (recipe_id, name, type, value)
   SELECT r.recipe_id, 'Cooking Method', 'choice', cm.name
   FROM oldrecipes.recipe r, oldrecipes.cooking_method cm
   WHERE cm.cooking_method_id = r.cooking_method_id
@@ -102,9 +102,8 @@ $rows = kdb::i()->q("
   from oldrecipes.cuisine
 ");
 
-
 $rows = kdb::i()->q("
-  insert into recipe_detail (recipe_id, name, type, value)
+  insert into recipeDetail (recipe_id, name, type, value)
   select r.recipe_id, 'cuisine', 'choice', cm.name
   from oldrecipes.recipe r, oldrecipes.cuisine cm
   where cm.cuisine_id = r.cuisine_id
@@ -124,7 +123,7 @@ $rows = kdb::i()->q("
 ");
 
 $rows = kdb::i()->q("
-  INSERT INTO recipe_detail (recipe_id, name, type, value)
+  INSERT INTO recipeDetail (recipe_id, name, type, value)
   SELECT rd.recipe_id, 'Dietetic', 'choice', d.name
   FROM oldrecipes.recipe_dietetic rd, oldrecipes.dietetic d
   WHERE d.dietetic_id = rd.dietetic_id
@@ -144,7 +143,7 @@ $rows = kdb::i()->q("
 ");
 
 $rows = kdb::i()->q("
-  insert into recipe_detail (recipe_id, name, type, value)
+  insert into recipeDetail (recipe_id, name, type, value)
   select r.recipe_id, 'Dish Type', 'choice', dt.name
   from oldrecipes.recipe r, oldrecipes.dish_type dt
   where dt.dish_type_id = r.dish_type_id
@@ -164,7 +163,7 @@ $rows = kdb::i()->q("
 ");
 
 $rows = kdb::i()->q("
-  INSERT INTO recipe_detail (recipe_id, name, type, value)
+  INSERT INTO recipeDetail (recipe_id, name, type, value)
   SELECT rd.recipe_id, 'Main Ingredient', 'string', d.name
   FROM oldrecipes.recipe_main_ingredient rd, oldrecipes.main_ingredient d
   WHERE d.main_ingredient_id = rd.main_ingredient_id
@@ -185,7 +184,7 @@ $rows = kdb::i()->q("
 ");
 
 $rows = kdb::i()->q("
-  INSERT INTO recipe_detail (recipe_id, name, type, value)
+  INSERT INTO recipeDetail (recipe_id, name, type, value)
   SELECT rd.recipe_id, 'Meal Type', 'choice', d.name
   FROM oldrecipes.recipe_meal_type rd, oldrecipes.meal_type d
   WHERE d.meal_type_id = rd.meal_type_id
@@ -206,7 +205,7 @@ $rows = kdb::i()->q("
 ");
 
 $rows = kdb::i()->q("
-  INSERT INTO recipe_detail (recipe_id, name, type, value)
+  INSERT INTO recipeDetail (recipe_id, name, type, value)
   SELECT rd.recipe_id, 'Occasion', 'choice', d.name
   FROM oldrecipes.recipe_occasion rd, oldrecipes.occasion d
   WHERE d.occasion_id = rd.occasion_id

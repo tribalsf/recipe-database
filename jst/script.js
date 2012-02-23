@@ -15,16 +15,14 @@ var admin = {
 
       switch ($(this).data('value')) {
 
+        case 'both':
         case 'grilling':
         case 'hiddenvalley':
 
-            if (admin.gets().recipe) {
-              location.href = g.G_URL + '?recipe=' + admin.gets().recipe + '&site=' + $(this).data('value');
-            } else {
-              location.href = g.G_URL + '?site=' + $(this).data('value');
-            }
-
+          $('.site_button').removeClass('site_button_active');
+          $(this).addClass('site_button_active');
           break;
+
         case 'details' :
           location.href = g.G_URL + '?details';
           break;
@@ -71,7 +69,7 @@ var admin = {
           modify.set();
           break;
 
-        case 'add_recipe_detail' :
+        case 'add_recipeDetail' :
           modify.add('detail');
           break;
 
@@ -438,9 +436,10 @@ var modify = {
     var datas = {
       recipe_id: modify.recipe_id,
       title: $('#title').val(),
+      site: $('.site_buttons_site .site_button_active').data('value'),
       servings: $('#servings').val(),
       prep_time: $('#prep_time').val(),
-      cook_time: $('#cook_time').val(),
+      cook_time: $('#cook_time').val()
     };
 
     if (datas.title == '') {
@@ -458,7 +457,7 @@ var modify = {
       } else {
         admin.status(response.message);
         modify.recipe_id = response.recipe_id;
-        setTimeout(function() { location.href = g.G_URL + '?recipe=' + response.recipe_id; }, 1000);
+        //setTimeout(function() { location.href = g.G_URL + '?recipe=' + response.recipe_id; }, 1000);
       }
 
     }, 'json');

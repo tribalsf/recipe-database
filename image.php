@@ -1,7 +1,7 @@
 <?
 
 require_once 'config.php';
-$img = new recipe_image($_REQUEST['recipe_id']);
+$img = new recipeImage($_REQUEST['recipe_id']);
 
 ?>
 
