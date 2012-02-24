@@ -18,9 +18,21 @@ if (isset($_REQUEST['action'])) {
       }
 
       $detail = new detail($data['name'], $data['type'], $data['value']);
+      $detail->site = $data['site'];
       $detail->save();
 
       break;
+
+    case 'update' :
+
+      $data = json_decode($_REQUEST['data'], true);
+      $detail = new detail($data['name'], $data['type'], $data['value']);
+      $detail->site = $data['site'];
+      $detail->save();
+
+      break;
+
+
 
   }
 

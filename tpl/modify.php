@@ -137,7 +137,7 @@
       <?if ($value[0]['type'] == 'choice'): ?>
       <select name="detail_value" id="detail_value" class="detail_value detail_value_<?=str_replace(' ', '_', $name)?>">
         <?foreach ($value as $val):?>
-        <option value="<?=$val['value']?>"><?=$val['value']?></option>
+        <option value="<?=$val['value']?>"><?=$val['value']?> (<?=$val['site']?>)</option>
         <?endforeach?>
       </select>
 

@@ -182,9 +182,13 @@ body {
   width: 430px;
 }
 
+.formmason {
+  margin: auto;
+}
+
 .formsmall {
 
-  width: 270px;
+  width: 370px;
   margin-left: 4px;
 
   -webkit-transition-duration: 0.7s;

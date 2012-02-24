@@ -1,10 +1,7 @@
 <?
 
-
 require_once 'config.php';
 require_once 'tpl/header.php';
-
-
 
 $site = 'hiddenvalley';
 

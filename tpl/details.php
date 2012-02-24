@@ -6,13 +6,24 @@
     <label for="name">Add a Detail</label>
 
     <div class="input">
+
       <input type="text" name="name" id="name" value="" />
+
       <select name="type" id="type">
         <option value="choice">choice</option>
         <option value="string">string</option>
         <option value="none">none</option>
       </select>
+
+
+      <select name="site" id="site">
+        <option value="both">both</option>
+        <option value="grilling">grilling.com</option>
+        <option value="hiddenvalley">hiddenvalley.com</option>
+      </select>
+
       <input type="text" name="value" id="value" value="" data-cmd="details.add();" />
+
       <div class="button" data-action="add_detail">Add</div>
     </div>
   </div>
@@ -31,6 +42,7 @@
       <table class="listing sublisting" border="0" cellspacing="0" cellpadding="0">
         <tr>
           <th>value</th>
+          <th>site</th>
         </tr>
         <?foreach ($detail as $d): ?>
         <tr>
@@ -42,6 +54,29 @@
               <div class="sprite sprite_delete"></div></div>
 
             <?=$d['value']?></td>
+
+          <td>
+            <div class="site_buttons site_buttons_detailsite">
+              <div 
+                class="site_button <?=($d['site'] == 'both') ? 'site_button_active' : ''?>" 
+                data-data='<?=json_encode($d)?>'
+                data-value="both" 
+                data-detail="1"
+              >b</div>
+              <div 
+                class="site_button <?=($d['site'] == 'grilling') ? 'site_button_active' : ''?>" 
+                data-data='<?=json_encode($d)?>'
+                data-value="grilling" 
+                data-detail="1"
+              >g</div>
+              <div 
+                class="site_button <?=($d['site'] == 'hiddenvalley') ? 'site_button_active' : ''?>" 
+                data-data='<?=json_encode($d)?>'
+                data-value="hiddenvalley" 
+                data-detail="1"
+              >hv</div>
+            </div>
+          </td>
         </tr>
         <?endforeach?>
       </table>

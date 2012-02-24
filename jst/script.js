@@ -19,8 +19,15 @@ var admin = {
         case 'grilling':
         case 'hiddenvalley':
 
-          $('.site_button').removeClass('site_button_active');
+          $(this).parent('.site_buttons').children('.site_button').removeClass('site_button_active');
+          //$('.site_button').removeClass('site_button_active');
+
           $(this).addClass('site_button_active');
+
+          if ($(this).data('detail')) {
+            details.update($(this));
+          }
+
           break;
 
         case 'details' :
@@ -205,8 +212,10 @@ var admin = {
 
     $('.status_body').html(message);
 
-    admin.center(s, {top: 50});
-    s.transition({opacity: 1}, 500, 'in');
+    if (s.css('opacity') == 0) {
+      admin.center(s, {top: 50});
+      s.transition({opacity: 1}, 500, 'in');
+    }
 
     if (p.fadeOut) { 
       setTimeout(function() { s.transition({opacity: 0}, 500, 'out'); }, p.fadeOut);
@@ -286,7 +295,8 @@ var details = {
 
     $('.formmason').masonry({
       itemSelector: '.formsmall',
-      columnWidth: 320
+      isFitWidth: true,
+      columnWidth: 420
     });
 
     $('#value').keyup(function(e) {
@@ -308,7 +318,8 @@ var details = {
     var details = {
       name: $('#name').val(),
       type: $('#type').val(),
-      value: $('#value').val()
+      value: $('#value').val(),
+      site: $('#site').val()
     };
 
     $.get(g.G_URL + 'ajx/details.php', {action: 'add', data: JSON.stringify(details)}, function(response) {
@@ -320,6 +331,21 @@ var details = {
         setTimeout(function() { location.href = g.G_URL + '?details'; });
       }
 
+    }, 'json');
+
+  },
+
+  update: function(obj) {
+
+    var details = obj.data('data');
+    details.site = obj.data('value');
+
+    $.get(g.G_URL + 'ajx/details.php', {action: 'update', data: JSON.stringify(details)}, function(response) {
+      if (response.error != false) {
+        admin.status(response.error, {type: 'error'});
+      } else {
+        admin.status('Detail updated');
+      }
     }, 'json');
 
   }

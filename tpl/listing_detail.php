@@ -3,6 +3,7 @@
       <tr>
         <th>name</th>
         <th>value</th>
+        <th>site</th>
       </tr>
 
       <?foreach ($recipeDetail as $dr):?>
@@ -15,6 +16,7 @@
             data-value='<?=json_encode(array('recipe_id' => $dr->recipe_id, 'type' => $dr->type, 'value' => $dr->value), JSON_HEX_APOS)?>' >
             <div class="sprite sprite_delete"></div></div>
         <?=$dr->value?></td>
+        <td><?=$dr->site?></td>
       </tr>
       <?endforeach?>
 

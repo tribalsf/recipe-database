@@ -1,8 +1,8 @@
 <?
 
-define('G_PATH', '/var/www/tribal/');
-define('LIB_PATHS', '/var/www/tribal/lib/,/var/www/tribal/klib/');
-define('G_URL', 'http://tribal.ssugar.com/');
+define('G_PATH', '/var/www/admin/');
+define('LIB_PATHS', '/var/www/admin/lib/,/var/www/admin/klib/');
+define('G_URL', 'http://admin.256.sh/');
 
 /* kdebug */
 define('KDEBUG', true);
